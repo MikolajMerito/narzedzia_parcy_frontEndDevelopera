@@ -11,6 +11,7 @@ const pressure = document.querySelector('#pressure');
 const visibility = document.querySelector('#visibility');
 const clouds = document.querySelector('#clouds');
 const weatherInfo = document.querySelector('#weather-info');
+const pollutioValue = document.querySelector('#pollutioValue');
 const errorMsg = document.querySelector('#error-msg');
 
 const APIinfo = {
@@ -26,7 +27,7 @@ function getWeatherInfo() {
     console.log(URL);
 
     axios.get(URL).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
 
         cityName.textContent = `${response.data.name}, ${response.data.sys.country}`;
         weatherIcon.src = `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`;
@@ -42,24 +43,40 @@ function getWeatherInfo() {
         weatherInfo.style.display = 'block';
         errorMsg.style.display = 'none';
 
+        // air pollution API
+        const URLpollution = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}${APIinfo.key}`;
+        // console.log(URLpollution);
+
+        axios.get(URLpollution).then((res) => {
+            console.log(res.data.list[0].components.pm2_5);
+            pollutioValue.textContent = res.data.list[0].components.pm2_5;
+            // napisz kod ktory bedzie zmienial kolor tla ikony w zaleznoscu od tego z jakiego przedzialu jest wartosc
+        });
+
     }).catch((error) => {
         console.log(error);
+
         errorMsg.textContent = `${error.response.data.message}`;
 
-        // usuwanie danych pogodowych
-        cityName.textContent = '';
-        weatherIcon.src = '';
-        temp.textContent = '';
-        weatherDesc.textContent = '';
-        feelsLike.textContent = '';
-        humidity.textContent = '';
-        windSpeed.textContent = '';
-        pressure.textContent = '';
-        visibility.textContent = '';
-        clouds.textContent = '';
+        [cityName, temp, weatherDesc, feelsLike, humidity, pressure, windSpeed, visibility, clouds].forEach(element => element.textContent = "");
+        weatherIcon.src = "";
 
-        weatherInfo.style.display = 'none';
-        errorMsg.style.display = 'block';
+        // // usuwanie danych pogodowych
+        // cityName.textContent = '';
+        // weatherIcon.src = '';
+        // temp.textContent = '';
+        // weatherDesc.textContent = '';
+        // feelsLike.textContent = '';
+        // humidity.textContent = '';
+        // windSpeed.textContent = '';
+        // pressure.textContent = '';
+        // visibility.textContent = '';
+        // clouds.textContent = '';
+
+        // weatherInfo.style.display = 'none';
+        // errorMsg.style.display = 'block';
+    }).finally(() => {
+        
     })
 }
 

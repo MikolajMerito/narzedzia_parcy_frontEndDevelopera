@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Weather App</h1>
-        
+
         <div class="search-box">
             <input type="text" id="city-input" placeholder="Enter city name..." value="Barcelona">
             <button id="API-Button">Search</button>
         </div>
-        
+
         <div id="error-msg"></div>
-        
+
         <div id="weather-info">
             <h2 id="city-name"></h2>
             <img id="weather-icon" src="" alt="">
             <p id="temp"></p>
             <p id="weather-desc"></p>
-            
+
             <div class="details">
                 <div class="detail-item">
                     <span>Feels Like:</span>
@@ -48,6 +50,10 @@
                     <span>Clouds:</span>
                     <p id="clouds"></p>
                 </div>
+                <div class="detail-item">
+                    <span>pollutioValue:</span>
+                    <p id="pollutioValue"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -55,4 +61,5 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
