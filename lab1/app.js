@@ -42,8 +42,8 @@ function getWeatherInfo () {
 }
 
 function getWeatherInfoByEnter (e) {
-    
+    console.log(e.data);
 }
 
 ApiButton.addEventListener("click", getWeatherInfo);
-InputDeviceInfo.addEventListener("keydown", getWeatherInfoByEnter);
+// InputDeviceInfo.addEventListener("keydown", getWeatherInfoByEnter);
