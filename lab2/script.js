@@ -11,7 +11,8 @@ const pressure = document.querySelector('#pressure');
 const visibility = document.querySelector('#visibility');
 const clouds = document.querySelector('#clouds');
 const weatherInfo = document.querySelector('#weather-info');
-const pollutioValue = document.querySelector('#pollutioValue');
+const pollutionValue = document.querySelector('#pollution-value');
+const pollutionIcon = document.querySelector('#pollution-icon');
 const errorMsg = document.querySelector('#error-msg');
 
 const APIinfo = {
@@ -21,14 +22,21 @@ const APIinfo = {
     lang: '&lang=pl',
 }
 
+function getPollutionLevel(pm25) {
+    if (pm25 <= 10) return { level: 'Good', color: '#00e400', icon: '😊' };
+    if (pm25 <= 25) return { level: 'Moderate', color: '#ffff00', icon: '😐' };
+    if (pm25 <= 50) return { level: 'Unhealthy for Sensitive', color: '#ff7e00', icon: '😷' };
+    if (pm25 <= 75) return { level: 'Unhealthy', color: '#ff0000', icon: '😨' };
+    if (pm25 <= 250.4) return { level: 'Very Unhealthy', color: '#8f3f97', icon: '🤢' };
+    return { level: 'Hazardous', color: '#7e0023', icon: '☠️' };
+}
+
 function getWeatherInfo() {
     const APIcity = input.value;
     const URL = `${APIinfo.link}${APIcity.trim()}${APIinfo.key}${APIinfo.units}${APIinfo.lang}`;
     console.log(URL);
-
+    
     axios.get(URL).then((response) => {
-        // console.log(response.data);
-
         cityName.textContent = `${response.data.name}, ${response.data.sys.country}`;
         weatherIcon.src = `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`;
         temp.textContent = `${Math.round(response.data.main.temp)}°C`;
@@ -39,44 +47,36 @@ function getWeatherInfo() {
         pressure.textContent = `${response.data.main.pressure}hPa`;
         visibility.textContent = `${response.data.visibility / 1000}km`;
         clouds.textContent = `${response.data.clouds.all}%`;
-
+        
         weatherInfo.style.display = 'block';
         errorMsg.style.display = 'none';
-
+        
         // air pollution API
         const URLpollution = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}${APIinfo.key}`;
-        // console.log(URLpollution);
-
+        
         axios.get(URLpollution).then((res) => {
-            console.log(res.data.list[0].components.pm2_5);
-            pollutioValue.textContent = res.data.list[0].components.pm2_5;
-            // napisz kod ktory bedzie zmienial kolor tla ikony w zaleznoscu od tego z jakiego przedzialu jest wartosc
+            const pm25 = res.data.list[0].components.pm2_5;
+            console.log('PM2.5:', pm25);
+            
+            const pollution = getPollutionLevel(pm25);
+            
+            pollutionValue.textContent = `${pm25.toFixed(1)} μg/m³`;
+            pollutionIcon.textContent = pollution.icon;
+            pollutionIcon.style.backgroundColor = pollution.color;
+            pollutionIcon.title = pollution.level;
         });
-
+        
     }).catch((error) => {
         console.log(error);
-
         errorMsg.textContent = `${error.response.data.message}`;
-
-        [cityName, temp, weatherDesc, feelsLike, humidity, pressure, windSpeed, visibility, clouds].forEach(element => element.textContent = "");
-        weatherIcon.src = "";
-
-        // // usuwanie danych pogodowych
-        // cityName.textContent = '';
-        // weatherIcon.src = '';
-        // temp.textContent = '';
-        // weatherDesc.textContent = '';
-        // feelsLike.textContent = '';
-        // humidity.textContent = '';
-        // windSpeed.textContent = '';
-        // pressure.textContent = '';
-        // visibility.textContent = '';
-        // clouds.textContent = '';
-
-        // weatherInfo.style.display = 'none';
-        // errorMsg.style.display = 'block';
-    }).finally(() => {
         
+        [cityName, temp, weatherDesc, feelsLike, humidity, pressure, windSpeed, visibility, clouds, pollutionValue].forEach(element => element.textContent = '');
+        weatherIcon.src = '';
+        pollutionIcon.textContent = '';
+        pollutionIcon.style.backgroundColor = '';
+        
+        weatherInfo.style.display = 'none';
+        errorMsg.style.display = 'block';
     })
 }
 
