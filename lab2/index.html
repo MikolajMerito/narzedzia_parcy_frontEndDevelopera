@@ -3,10 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        #city-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        #city-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        #API-Button {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        #API-Button:hover {
+            background: #5568d3;
+        }
+        
+        #weather-display {
+            display: none;
+            text-align: center;
+        }
+        
+        #weather-display.show {
+            display: block;
+        }
+        
+        .city-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+        
+        .temperature {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .description {
+            font-size: 24px;
+            color: #666;
+            text-transform: capitalize;
+            margin-bottom: 20px;
+        }
+        
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .detail-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .detail-label {
+            font-size: 14px;
+            color: #999;
+            text-transform: uppercase;
+        }
+        
+        .detail-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 5px;
+        }
+        
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            padding: 15px;
+            background: #ffe6e6;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .error.show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <button id="API-Button">Get API Response</button>
+    <div class="container">
+        <h1>🌤️ Weather App</h1>
+        
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Wpisz nazwę miasta..." value="Barcelona">
+            <button id="API-Button">Szukaj</button>
+        </div>
+        
+        <div id="error-display" class="error"></div>
+        
+        <div id="weather-display">
+            <div class="city-name" id="city-name"></div>
+            <img class="weather-icon" id="weather-icon" src="" alt="Weather icon">
+            <div class="temperature" id="temperature"></div>
+            <div class="description" id="description"></div>
+            
+            <div class="weather-details">
+                <div class="detail-item">
+                    <div class="detail-label">Odczuwalna</div>
+                    <div class="detail-value" id="feels-like"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Wilgotność</div>
+                    <div class="detail-value" id="humidity"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Wiatr</div>
+                    <div class="detail-value" id="wind"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Ciśnienie</div>
+                    <div class="detail-value" id="pressure"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
