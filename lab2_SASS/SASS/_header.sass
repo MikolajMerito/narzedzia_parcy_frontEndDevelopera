@@ -8,4 +8,9 @@ html
     font-family: "Montserrat", sans-serif
 
 header
-    background-color: $second-color
+    @include flexContainer(column, center, center)
+    @include box(100%, 20px, $main-color, $second-color)
+
+body
+    min-height: 100vh
+    @include flexContainer(column, space-between, center)
