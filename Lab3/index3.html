@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikacja pogodowa</title>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Aplikacja pogodowa</h1>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Podaj nazwę miasta">
+            <button>Sprawdź pogodę!</button>
+            <p class="error_message"></p>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2 class="city_name"></h2>
+            <div class="weather_info">
+                <div class="img_and_temp">
+                    <img src="" alt="" class="img_weather">
+                    <p class="temp"></p>
+                </div>
+                <p class="weather_description"></p>
+            </div>
+        </section>
+        <section>
+            <p>Temperatura odczuwalna: <span class="feels_like"></span></p>
+            <p>Wilgotność: <span class="humidity"></span></p>
+            <p>Ciśnienie: <span class="pressure"></span></p>
+            <p>Prędkość wiatru: <span class="wind_speed"></span></p>
+            <p>Widoczność: <span class="visibility"></span></p>
+            <p>Zachmurzenie: <span class="clouds"></span></p>
+        </section>
+        <section class="air_pollution">
+            <h3>Zanieczyszczenie powietrza</h3>
+            <div class="pm25">
+                <img src="./img/pm25.png" alt="" class="img_pm25">
+                <p class="pm25_value"></p>
+                <p>&micro;g/m<sup>3</sup></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Projekt WSB Merito Gdańsk 2025</p>
+        <p>Autor: Magda M.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>

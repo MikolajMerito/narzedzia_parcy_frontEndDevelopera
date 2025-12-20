@@ -1,0 +1,13 @@
+strona na zaliczeniu muszi byc responsywna
+
+nie moze byc scrollowania poziomego
+namniejsze urzadzenie 320px
+
+piszemy w podejsciu mobile first
+
+musui byc minimum mediaquery
+
+mozna np parametry pogodowe wyswietlac w 2 kolumnach
+a na mobilnej w 1
+
+mozna w tle wyswietlac zdjecie miasta z ktorego wyswietlamy pogode(jezeli jest takie api z miastami)
